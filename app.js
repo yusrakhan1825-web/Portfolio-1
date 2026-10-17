@@ -131,13 +131,15 @@ document.querySelector("#year").textContent =
 
 const EMAILJS_PUBLIC_KEY = "JmGzgGrGm2nD6pBDe";
 const EMAILJS_SERVICE_ID = "service_fz2ksbp";
-const EMAILJS_TEMPLATE_ID = "template_3w03q56";
+const EMAILJS_TEMPLATE_ID = "template_3as0v1v";
+const EMAILJS_REPLY_TEMPLATE_ID = "template_3w03q56";
 
 const emailIsConfigured =
     typeof emailjs !== "undefined" &&
     EMAILJS_PUBLIC_KEY !== "YOUR_PUBLIC_KEY" &&
     EMAILJS_SERVICE_ID !== "YOUR_SERVICE_ID" &&
     EMAILJS_TEMPLATE_ID !== "YOUR_TEMPLATE_ID";
+     EMAILJS_REPLY_TEMPLATE_ID !== "YOUR_REPLY_TEMPLATE_ID";
 
 if (emailIsConfigured) {
     emailjs.init({
@@ -212,6 +214,14 @@ contactForm.addEventListener("submit", async function (event) {
             EMAILJS_TEMPLATE_ID,
             templateParams
         );
+        await emailjs.send(
+    EMAILJS_SERVICE_ID,
+    EMAILJS_REPLY_TEMPLATE_ID,
+    {
+        to_email: email,
+        to_name: name
+    }
+);
 
         showFormStatus(
             "Your message was sent successfully. Thank you!",
